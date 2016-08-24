@@ -16,11 +16,16 @@ module.exports = function(grunt) {
 
     nodemon: {
       dev: {
-        script: 'server.js'
+        script: 'nodemon --ignore node_modules server.js'
       }
     },
 
     uglify: {
+      build: {
+        files: {
+            'public/dist/min.js': ['public/client/*.js']
+        }
+      }
     },
 
     eslint: {
@@ -30,6 +35,11 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      build: {
+        files: {
+            'public/dist/min.style.css': ['public/style.css']
+        }
+      }
     },
 
     watch: {
@@ -77,6 +87,8 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'uglify',
+    'cssmin'
   ]);
 
   grunt.registerTask('upload', function(n) {
@@ -88,6 +100,8 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('deploy', [
+    'eslint',
+    'nodemon'
     // add your deploy tasks here
   ]);
 
